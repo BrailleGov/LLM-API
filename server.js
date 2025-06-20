@@ -7,7 +7,10 @@ const app = express();
 app.use(express.json());
 
 const PORT = 8080;
-const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1385648877977206931/-u-4rhcjfofA7jslKEAcWTvzwP9abk4TKft-sG3d6sRQXw2fOY2MG-mSa9niInvLeyZ3';
+const DISCORD_WEBHOOK = process.env.DISCORD_WEBHOOK;
+if (!DISCORD_WEBHOOK) {
+  console.warn('Warning: DISCORD_WEBHOOK environment variable not set. Webhook notifications will be disabled.');
+}
 
 // Load API keys from apikeys.json
 const API_KEYS = new Set(
@@ -16,6 +19,7 @@ const API_KEYS = new Set(
 
 // Helper to send webhook notifications (fire and forget)
 function sendWebhook(info) {
+  if (!DISCORD_WEBHOOK) return;
   const embed = {
     title: 'LLM Request',
     fields: [

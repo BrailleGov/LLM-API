@@ -15,6 +15,10 @@ Simple HTTP wrapper for Ollama.
 
 The service listens on port `8080` and exposes a single `POST /generate` endpoint.
 
+### Environment
+
+* `DISCORD_WEBHOOK` - Discord webhook URL used for request logging. If unset, webhook notifications are disabled and a warning is printed on startup.
+
 ## Authentication
 
 Valid API keys are stored in `apikeys.json`. Each request must provide an
