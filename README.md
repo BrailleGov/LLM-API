@@ -15,12 +15,12 @@ Simple HTTP wrapper for Ollama.
 
 The service listens on port `8080` and exposes a single `POST /generate` endpoint.
 
-### Environment
+### Configuration
 
-This repository includes a `.env` file with a sample Discord webhook for testing.
-The server reads the following variable from the environment:
-
-* `DISCORD_WEBHOOK` - Discord webhook URL used for request logging. If unset, webhook notifications are disabled and a warning is printed on startup.
+This repository includes a `config.json` file with a sample Discord webhook for
+testing. The server reads the `DISCORD_WEBHOOK` value from this file. If it is
+missing, webhook notifications are disabled and a warning is printed on
+startup.
 
 ## Authentication
 

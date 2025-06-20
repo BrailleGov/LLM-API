@@ -7,9 +7,19 @@ const app = express();
 app.use(express.json());
 
 const PORT = 8080;
-const DISCORD_WEBHOOK = process.env.DISCORD_WEBHOOK;
+let DISCORD_WEBHOOK = null;
+try {
+  const config = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'config.json'), 'utf-8')
+  );
+  DISCORD_WEBHOOK = config.DISCORD_WEBHOOK;
+} catch (err) {
+  // ignore errors - handled below
+}
 if (!DISCORD_WEBHOOK) {
-  console.warn('Warning: DISCORD_WEBHOOK environment variable not set. Webhook notifications will be disabled.');
+  console.warn(
+    'Warning: DISCORD_WEBHOOK not found in config.json. Webhook notifications will be disabled.'
+  );
 }
 
 // Load API keys from apikeys.json
