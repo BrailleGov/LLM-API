@@ -14,6 +14,9 @@ Simple HTTP wrapper for Ollama.
    ```
 
 The service listens on port `8080` and exposes a single `POST /generate` endpoint.
+This endpoint returns a JSON response with a single `text` field containing the
+final model output. Any `<think>` blocks produced by the model are removed
+before the text is returned.
 
 ### Configuration
 

@@ -77,7 +77,7 @@ app.post('/generate', async (req, res) => {
     }
 
     const evalCount = ollamaResp.data.eval_count;
-    res.status(200).json({ response: text });
+    res.status(200).json({ text });
 
     sendWebhook({
       status: 200,

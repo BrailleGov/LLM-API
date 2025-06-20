@@ -40,6 +40,6 @@ describe('POST /generate', () => {
       .post('/generate')
       .send({ prompt: 'hi', api_key: validKey });
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ response: 'Hello world' });
+    expect(res.body).toEqual({ text: 'Hello world' });
   });
 });
