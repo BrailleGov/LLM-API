@@ -75,7 +75,7 @@ app.post('/generate', async (req, res) => {
   } catch (err) {
     const duration = Date.now() - start;
     const status = err.response ? err.response.status : 500;
-    const message = err.message;
+    const message = err.response?.data?.error || err.message || 'Unknown error';
     const evalCount = err.response && err.response.data ? err.response.data.eval_count : undefined;
 
     res.status(status).json({ error: message });
