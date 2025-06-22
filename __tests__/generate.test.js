@@ -1,6 +1,7 @@
 const request = require('supertest');
 const axios = require('axios');
 const app = require('../server');
+const { getClientIP } = require('../server');
 
 jest.mock('axios');
 
@@ -53,5 +54,17 @@ describe('POST /generate', () => {
     const call = axios.post.mock.calls[0];
     expect(call[0]).toBe('http://localhost:11434/api/generate');
     expect(call[1]).toEqual(expect.objectContaining({ system }));
+  });
+});
+
+describe('getClientIP', () => {
+  test('strips ::ffff: prefix', () => {
+    const req = { ip: '::ffff:45.78.122.164' };
+    expect(getClientIP(req)).toBe('45.78.122.164');
+  });
+
+  test('returns ip unchanged when no prefix', () => {
+    const req = { ip: '127.0.0.1' };
+    expect(getClientIP(req)).toBe('127.0.0.1');
   });
 });
