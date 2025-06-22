@@ -23,16 +23,18 @@ before the text is returned.
 
 ### Configuration
 
-This repository includes a `config.json` file with a sample Discord webhook for
-testing. The server reads the `DISCORD_WEBHOOK` value from this file. If it is
-missing, webhook notifications are disabled and a warning is printed on
+Create a `config.json` file in the project root containing your
+`DISCORD_WEBHOOK` value. This file is ignored by git because it may store
+sensitive information. You can use `config.example.json` as a template. If the
+file is missing, webhook notifications are disabled and a warning is printed on
 startup.
 
 ## Authentication
 
-Valid API keys are stored in `apikeys/apikeys.json`. Each request must provide an
-`api_key` in the JSON body (or header). Requests with missing or invalid keys
-will receive **401 Unauthorized**.
+Valid API keys are stored in `apikeys/apikeys.json`. Copy
+`apikeys/apikeys.example.json` to that location and list one key per line in the
+array. Each request must provide an `api_key` in the JSON body (or header).
+Requests with missing or invalid keys will receive **401 Unauthorized**.
 
 ## API Usage Example
 
