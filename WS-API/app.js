@@ -84,7 +84,11 @@ const server = http.createServer(async (req, res) => {
   console.log(`Search request: ${query}`);
 
   const result = await search(query);
-  console.log(`First result for "${query}": ${result.url}`);
+  if (result.url) {
+    console.log(`First result for "${query}": ${result.url}`);
+  } else {
+    console.log(`No result found for "${query}"`);
+  }
   const data = JSON.stringify(result);
   res.writeHead(200, {
     'Content-Type': 'application/json',
@@ -96,7 +100,7 @@ const server = http.createServer(async (req, res) => {
 if (require.main === module) {
   const port = process.argv[2] ? parseInt(process.argv[2], 10) : 8000;
   server.listen(port, () => {
-    console.log(`Serving on port ${port}`);
+    console.log(`WS-API server listening on port ${port}`);
   });
 }
 
