@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const FormData = require('form-data');
 
 const app = express();
 app.use(express.json());
@@ -49,7 +50,28 @@ function sendWebhook(info) {
     embed.fields.push({ name: 'Error', value: info.error });
   }
 
-  axios.post(DISCORD_WEBHOOK, { embeds: [embed] }).catch(() => {});
+  // Prepare payload for Discord webhook
+  const form = new FormData();
+  form.append('payload_json', JSON.stringify({ embeds: [embed] }));
+
+  let fileIndex = 0;
+  if (info.prompt) {
+    form.append(`files[${fileIndex}]`, JSON.stringify({ prompt: info.prompt }), {
+      filename: 'input.json',
+      contentType: 'application/json'
+    });
+    fileIndex += 1;
+  }
+  if (info.text) {
+    form.append(`files[${fileIndex}]`, JSON.stringify({ text: info.text }), {
+      filename: 'output.json',
+      contentType: 'application/json'
+    });
+  }
+
+  axios
+    .post(DISCORD_WEBHOOK, form, { headers: form.getHeaders() })
+    .catch(() => {});
 }
 
 app.post('/generate', async (req, res) => {
@@ -89,7 +111,9 @@ app.post('/generate', async (req, res) => {
       evalCount,
       duration,
       apiKey,
-      ip: req.ip
+      ip: req.ip,
+      prompt,
+      text
     });
   } catch (err) {
     const duration = Date.now() - start;
@@ -116,6 +140,7 @@ app.post('/generate', async (req, res) => {
       duration,
       apiKey,
       ip: req.ip,
+      prompt,
       error: message
     });
   }
