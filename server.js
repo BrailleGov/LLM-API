@@ -33,6 +33,11 @@ const API_KEYS = new Set(
   )
 );
 
+function getClientIP(req) {
+  if (!req || typeof req.ip !== 'string') return '';
+  return req.ip.replace(/^::ffff:/, '');
+}
+
 // Helper to send webhook notifications (fire and forget)
 function sendWebhook(info) {
   if (!DISCORD_WEBHOOK) return;
@@ -78,7 +83,7 @@ app.post('/generate', async (req, res) => {
   const apiKey = req.body.api_key || req.get('api_key');
   if (!apiKey || !API_KEYS.has(apiKey)) {
     res.status(401).json({ error: 'Unauthorized' });
-    sendWebhook({ status: 401, apiKey, ip: req.ip });
+    sendWebhook({ status: 401, apiKey, ip: getClientIP(req) });
     return;
   }
 
@@ -86,7 +91,7 @@ app.post('/generate', async (req, res) => {
   const system = req.body.system;
   if (!prompt) {
     res.status(400).json({ error: 'Missing prompt' });
-    sendWebhook({ status: 400, apiKey, ip: req.ip });
+    sendWebhook({ status: 400, apiKey, ip: getClientIP(req) });
     return;
   }
 
@@ -120,7 +125,7 @@ app.post('/generate', async (req, res) => {
       evalCount,
       duration,
       apiKey,
-      ip: req.ip,
+      ip: getClientIP(req),
       prompt,
       text
     });
@@ -148,7 +153,7 @@ app.post('/generate', async (req, res) => {
       evalCount,
       duration,
       apiKey,
-      ip: req.ip,
+      ip: getClientIP(req),
       prompt,
       error: message
     });
@@ -162,3 +167,4 @@ if (require.main === module) {
 }
 
 module.exports = app;
+module.exports.getClientIP = getClientIP;
