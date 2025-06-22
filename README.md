@@ -41,12 +41,12 @@ Requests with missing or invalid keys will receive **401 Unauthorized**.
 Once the server is running you can send a request to `/generate` to obtain text from the model:
 
 ```bash
-curl -X POST https://hanging.wang/generate \
+curl -X POST http://hanging.wang:8080/generate \
      -H "Content-Type: application/json" \
-     -d '{"api_key": "<your-key>", "prompt": "Tell me a joke"}'
+     -d '{"api_key": "API_KEY", "prompt": "How occurances of the letter \"r\" are there in the word \"strawberry\"?"}'
 ```
 
-Replace `<your-key>` with a value from `apikeys/apikeys.json`. The response will look like:
+Replace `API_KEY` with a value from `apikeys/apikeys.json`. The response will look like:
 
 ```json
 { "text": "...model output..." }
