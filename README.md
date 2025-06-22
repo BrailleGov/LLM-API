@@ -39,7 +39,7 @@ will receive **401 Unauthorized**.
 Once the server is running you can send a request to `/generate` to obtain text from the model:
 
 ```bash
-curl -X POST http://localhost:8080/generate \
+curl -X POST https://hanging.wang/generate \
      -H "Content-Type: application/json" \
      -d '{"api_key": "<your-key>", "prompt": "Tell me a joke"}'
 ```
