@@ -42,4 +42,16 @@ describe('POST /generate', () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ text: 'Hello world' });
   });
+
+  test('forwards system prompt when provided', async () => {
+    axios.post.mockResolvedValueOnce(mockResponse);
+    axios.post.mockResolvedValue({});
+    const system = 'You are a pirate.';
+    await request(app)
+      .post('/generate')
+      .send({ prompt: 'hi', api_key: validKey, system });
+    const call = axios.post.mock.calls[0];
+    expect(call[0]).toBe('http://localhost:11434/api/generate');
+    expect(call[1]).toEqual(expect.objectContaining({ system }));
+  });
 });

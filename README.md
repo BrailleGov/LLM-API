@@ -19,7 +19,9 @@ This server assumes an Ollama instance is running locally at
 The service listens on port `8080` and exposes a single `POST /generate` endpoint.
 This endpoint returns a JSON response with a single `text` field containing the
 final model output. Any `<think>` blocks produced by the model are removed
-before the text is returned.
+before the text is returned. The request body must include a `prompt` and may
+optionally include a `system` message which is forwarded to Ollama as the system
+prompt.
 
 ### Configuration
 
@@ -43,7 +45,7 @@ Once the server is running you can send a request to `/generate` to obtain text 
 ```bash
 curl -X POST http://hanging.wang:8080/generate \
      -H "Content-Type: application/json" \
-     -d '{"api_key": "API_KEY", "prompt": "How occurances of the letter \"r\" are there in the word \"strawberry\"?"}'
+     -d '{"api_key": "API_KEY", "prompt": "How occurances of the letter \"r\" are there in the word \"strawberry\"?", "system": "You are a helpful assistant."}'
 ```
 
 Replace `API_KEY` with a value from `apikeys/apikeys.json`. The response will look like:

@@ -83,6 +83,7 @@ app.post('/generate', async (req, res) => {
   }
 
   const prompt = req.body.prompt;
+  const system = req.body.system;
   if (!prompt) {
     res.status(400).json({ error: 'Missing prompt' });
     sendWebhook({ status: 400, apiKey, ip: req.ip });
@@ -91,11 +92,19 @@ app.post('/generate', async (req, res) => {
 
   const start = Date.now();
   try {
-    const ollamaResp = await axios.post('http://localhost:11434/api/generate', {
+    const payload = {
       model: 'deepseek-r1:latest',
       prompt,
       stream: false
-    }, { headers: { 'Content-Type': 'application/json' } });
+    };
+    if (system) {
+      payload.system = system;
+    }
+    const ollamaResp = await axios.post(
+      'http://localhost:11434/api/generate',
+      payload,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
     const duration = Date.now() - start;
     let text = ollamaResp.data.response;
