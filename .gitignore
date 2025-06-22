@@ -4,3 +4,4 @@ node_modules/
 apikeys/
 webhook.config
 apikeys.json
+config.json

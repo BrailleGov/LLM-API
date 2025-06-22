@@ -23,14 +23,18 @@ if (!DISCORD_WEBHOOK) {
 }
 
 // Load API keys from apikeys/apikeys.json
-const API_KEYS = new Set(
-  JSON.parse(
+let apiKeys = [];
+try {
+  apiKeys = JSON.parse(
     fs.readFileSync(
       path.join(__dirname, 'apikeys', 'apikeys.json'),
       'utf-8'
     )
-  )
-);
+  );
+} catch (err) {
+  console.warn('Warning: apikeys/apikeys.json not found. All requests will be rejected.');
+}
+const API_KEYS = new Set(apiKeys);
 
 // Helper to send webhook notifications (fire and forget)
 function sendWebhook(info) {
