@@ -1,6 +1,6 @@
 node_modules/
 # Sensitive files
 .env
-apikeys/
+config.json
+apikeys/apikeys.json
 webhook.config
-apikeys.json
