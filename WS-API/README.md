@@ -1,20 +1,20 @@
 # WS-API
 
-A simple search web service implemented in Python. It sends a request to Google
+A simple search web service implemented in Node.js. It sends a request to Google
 for the query and returns the first result page with a short summary.
 
 ## Usage
 
-Install the required Python packages:
+Install the required packages:
 
 ```bash
-pip install requests beautifulsoup4
+npm install
 ```
 
 Run the server:
 
 ```bash
-python app.py [PORT]
+node app.js [PORT]
 ```
 
 It exposes `GET /search?q=<query>` which returns JSON:
