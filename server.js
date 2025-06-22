@@ -22,9 +22,14 @@ if (!DISCORD_WEBHOOK) {
   );
 }
 
-// Load API keys from apikeys.json
+// Load API keys from apikeys/apikeys.json
 const API_KEYS = new Set(
-  JSON.parse(fs.readFileSync(path.join(__dirname, 'apikeys.json'), 'utf-8'))
+  JSON.parse(
+    fs.readFileSync(
+      path.join(__dirname, 'apikeys', 'apikeys.json'),
+      'utf-8'
+    )
+  )
 );
 
 // Helper to send webhook notifications (fire and forget)

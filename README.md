@@ -30,7 +30,7 @@ startup.
 
 ## Authentication
 
-Valid API keys are stored in `apikeys.json`. Each request must provide an
+Valid API keys are stored in `apikeys/apikeys.json`. Each request must provide an
 `api_key` in the JSON body (or header). Requests with missing or invalid keys
 will receive **401 Unauthorized**.
 
@@ -44,7 +44,7 @@ curl -X POST https://hanging.wang/generate \
      -d '{"api_key": "<your-key>", "prompt": "Tell me a joke"}'
 ```
 
-Replace `<your-key>` with a value from `apikeys.json`. The response will look like:
+Replace `<your-key>` with a value from `apikeys/apikeys.json`. The response will look like:
 
 ```json
 { "text": "...model output..." }
