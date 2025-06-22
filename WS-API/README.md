@@ -25,3 +25,9 @@ It exposes `GET /search?q=<query>` which returns JSON:
 
 The service does not rely on the Google API; it simply fetches Google's search
 results page and follows the first result link.
+
+Example request:
+
+```bash
+curl "http://localhost:8000/search?q=openai"
+```
