@@ -81,8 +81,10 @@ const server = http.createServer(async (req, res) => {
     res.end('Missing query');
     return;
   }
+  console.log(`Search request: ${query}`);
 
   const result = await search(query);
+  console.log(`First result for "${query}": ${result.url}`);
   const data = JSON.stringify(result);
   res.writeHead(200, {
     'Content-Type': 'application/json',
