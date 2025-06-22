@@ -23,16 +23,24 @@ before the text is returned.
 
 ### Configuration
 
-This repository includes a `config.json` file with a sample Discord webhook for
-testing. The server reads the `DISCORD_WEBHOOK` value from this file. If it is
-missing, webhook notifications are disabled and a warning is printed on
-startup.
+Create a `config.json` file in the project root containing your Discord
+webhook URL:
+
+```json
+{
+  "DISCORD_WEBHOOK": "https://discord.com/api/webhooks/<your-webhook>"
+}
+```
+
+An example file `config.example.json` is provided. If `config.json` is missing,
+webhook notifications are disabled and a warning is printed on startup.
 
 ## Authentication
 
-Valid API keys are stored in `apikeys.json`. Each request must provide an
-`api_key` in the JSON body (or header). Requests with missing or invalid keys
-will receive **401 Unauthorized**.
+Valid API keys should be stored in `apikeys/apikeys.json` (this path is ignored by git).
+Copy `apikeys.example.json` to that location and edit it to contain an array of allowed keys.
+Each request must provide an `api_key` in the JSON body (or header). Requests with
+missing or invalid keys will receive **401 Unauthorized**.
 
 ## API Usage Example
 
@@ -44,7 +52,7 @@ curl -X POST https://hanging.wang/generate \
      -d '{"api_key": "<your-key>", "prompt": "Tell me a joke"}'
 ```
 
-Replace `<your-key>` with a value from `apikeys.json`. The response will look like:
+Replace `<your-key>` with a value from `apikeys/apikeys.json`. The response will look like:
 
 ```json
 { "text": "...model output..." }

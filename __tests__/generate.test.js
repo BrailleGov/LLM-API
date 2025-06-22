@@ -1,5 +1,14 @@
 const request = require('supertest');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
+// create temporary apikeys file for tests
+const apikeysDir = path.join(__dirname, '..', 'apikeys');
+const apikeysPath = path.join(apikeysDir, 'apikeys.json');
+fs.mkdirSync(apikeysDir, { recursive: true });
+fs.writeFileSync(apikeysPath, '["key1"]');
+
 const app = require('../server');
 
 jest.mock('axios');
@@ -8,6 +17,10 @@ const validKey = 'key1';
 const mockResponse = {
   data: { response: 'Hello world', eval_count: 42 }
 };
+
+afterAll(() => {
+  fs.rmSync(apikeysDir, { recursive: true, force: true });
+});
 
 beforeEach(() => {
   axios.post.mockReset();

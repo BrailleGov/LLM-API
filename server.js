@@ -22,10 +22,19 @@ if (!DISCORD_WEBHOOK) {
   );
 }
 
-// Load API keys from apikeys.json
-const API_KEYS = new Set(
-  JSON.parse(fs.readFileSync(path.join(__dirname, 'apikeys.json'), 'utf-8'))
-);
+// Load API keys from apikeys/apikeys.json
+let apiKeys = [];
+try {
+  apiKeys = JSON.parse(
+    fs.readFileSync(
+      path.join(__dirname, 'apikeys', 'apikeys.json'),
+      'utf-8'
+    )
+  );
+} catch (err) {
+  console.warn('Warning: apikeys/apikeys.json not found. All requests will be rejected.');
+}
+const API_KEYS = new Set(apiKeys);
 
 // Helper to send webhook notifications (fire and forget)
 function sendWebhook(info) {
