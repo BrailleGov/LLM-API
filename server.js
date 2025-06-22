@@ -64,7 +64,7 @@ app.post('/generate', async (req, res) => {
 
   const start = Date.now();
   try {
-    const ollamaResp = await axios.post('http://192.168.1.184:11434/api/generate', {
+    const ollamaResp = await axios.post('http://localhost:11434/api/generate', {
       model: 'deepseek-r1:latest',
       prompt,
       stream: false

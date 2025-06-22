@@ -2,6 +2,9 @@
 
 Simple HTTP wrapper for Ollama.
 
+This server assumes an Ollama instance is running locally at
+`http://localhost:11434`.
+
 ## Setup
 
 1. Install dependencies:
